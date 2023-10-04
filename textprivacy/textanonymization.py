@@ -73,13 +73,15 @@ class TextAnonymizer(object):
         self.transformed_corpus: List[str]
         self.mapping: Dict[str, str] = {
             "PER": "[PERSON]",
-            "LOC": "[LOKATION]",
+            #"LOC": "[LOKATION]",
             "ORG": "[ORGANISATION]",
             "CPR": "[CPR]",
             "TELEFON": "[TELEFON]",
             "EMAIL": "[EMAIL]",
         }
-        self._supported_NE: List[str] = ["PER", "LOC", "ORG"]
+        #self._supported_NE: List[str] = ["PER", "LOC", "ORG"]
+        self._supported_NE: List[str] = ["PER", "ORG"]
+
 
         if self.mask_misc:
             self.mapping.update({"MISC": "[DIVERSE]"})
@@ -175,7 +177,8 @@ class TextAnonymizer(object):
             if ent_type == "PER":
                 ent = ent.replace(".", "")
             if ent != "" and not (
-                ent_type in ["PER", "LOC", "ORG", "EMAIL", "CPR", "TELEFON"]
+                #ent_type in ["PER", "LOC", "ORG", "EMAIL", "CPR", "TELEFON"]
+                ent_type in ["PER", "ORG", "EMAIL", "CPR", "TELEFON"]
                 and len(ent) <= 2
             ):
                 ent_regex = r"(.?)({})(.?)".format(re.escape(ent))
